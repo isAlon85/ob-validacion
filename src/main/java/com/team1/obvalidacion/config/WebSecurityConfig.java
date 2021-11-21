@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeRequests()
-                //AQUI SE HA QUITADO LA AUTENTICACION
+                //AQUI SE HA QUITADO LA AUTENTICACION!!
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin()
