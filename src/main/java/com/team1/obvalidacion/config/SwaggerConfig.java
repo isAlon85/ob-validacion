@@ -25,7 +25,7 @@ public class SwaggerConfig {
     }
 
     private ApiInfo apiDetails(){
-        return new ApiInfo("Proyect Valdación, de OpenBootcamp",
+        return new ApiInfo("Proyecto Validación, de OpenBootcamp",
                 "Library API REST docs",
                 "1.0",
                 "http://www.google.com",
