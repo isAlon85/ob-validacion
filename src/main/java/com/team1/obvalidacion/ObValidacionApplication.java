@@ -13,5 +13,6 @@ public class ObValidacionApplication {
 		RegUserRepository regUserRepository = context.getBean(RegUserRepository.class);
 
 		System.out.println("User's number in DB when API initialized: " + regUserRepository.count());
+
 	}
 }

@@ -25,29 +25,21 @@ public class RegUser {
     private String email;
 
     @Column
-    private String platform;
-
-    @Column
     private String name;
 
     @Column
-    private String surname1;
-
-    @Column
-    private String surname2;
+    private String surname;
 
     public RegUser() {
     }
 
-    public RegUser(Long id, String username, String password, String email, String platform, String name, String surname1, String surname2) {
+    public RegUser(Long id, String username, String password, String email, String name, String surname) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.email = email;
-        this.platform = platform;
         this.name = name;
-        this.surname1 = surname1;
-        this.surname2 = surname2;
+        this.surname = surname;
     }
 
     public Long getId() {
@@ -82,14 +74,6 @@ public class RegUser {
         this.email = email;
     }
 
-    public String getPlatform() {
-        return platform;
-    }
-
-    public void setPlatform(String platform) {
-        this.platform = platform;
-    }
-
     public String getName() {
         return name;
     }
@@ -98,20 +82,12 @@ public class RegUser {
         this.name = name;
     }
 
-    public String getSurname1() {
-        return surname1;
+    public String getSurname() {
+        return surname;
     }
 
-    public void setSurname1(String surname1) {
-        this.surname1 = surname1;
-    }
-
-    public String getSurname2() {
-        return surname2;
-    }
-
-    public void setSurname2(String surname2) {
-        this.surname2 = surname2;
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     @Override
@@ -121,10 +97,8 @@ public class RegUser {
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", platform='" + platform + '\'' +
                 ", name='" + name + '\'' +
-                ", surname1='" + surname1 + '\'' +
-                ", surname2='" + surname2 + '\'' +
+                ", surname1='" + surname + '\'' +
                 '}';
     }
 }

@@ -42,7 +42,7 @@ public class RegUserController {
         ResponseEntity<RegUser> result = regUserService.create(regUser);
 
         if (result.getStatusCode().equals(HttpStatus.BAD_REQUEST))
-            log.warn("Trying to create a RegUser with ID");
+            log.warn("Trying to create a RegUser with ID or email/username is already used");
 
         return result;
     }
