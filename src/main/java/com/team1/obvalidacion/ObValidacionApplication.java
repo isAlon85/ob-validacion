@@ -12,6 +12,6 @@ public class ObValidacionApplication {
 		ApplicationContext context = SpringApplication.run(ObValidacionApplication.class, args);
 		RegUserRepository regUserRepository = context.getBean(RegUserRepository.class);
 
-		System.out.println("User's number in DB when repository initialized: " + regUserRepository.findAll().size());
+		System.out.println("User's number in DB when repository initialized: " + regUserRepository.count());
 	}
 }
