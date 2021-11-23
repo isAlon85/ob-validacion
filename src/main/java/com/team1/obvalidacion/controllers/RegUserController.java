@@ -36,7 +36,7 @@ public class RegUserController {
         return regUserService.findOneById(id);
     }
 
-    @PostMapping(ROOT)
+    @PostMapping(ROOT + "/register")
     @ApiOperation("Create a regUser in DB with a JSON")
     public ResponseEntity<RegUser> create(@RequestBody RegUser regUser) {
         ResponseEntity<RegUser> result = regUserService.create(regUser);

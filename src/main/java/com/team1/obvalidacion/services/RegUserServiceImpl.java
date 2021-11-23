@@ -54,12 +54,6 @@ public class RegUserServiceImpl implements RegUserService {
             }
         }
 
-        for (int i = 0; i < regUserRepository.count(); i++){
-            if (Objects.equals(regUser.getUsername(), regUserRepository.findAll().get(i).getUsername())) {
-                return ResponseEntity.badRequest().build();
-            }
-        }
-
         regUser.setPassword(bcryptEncoder.encode(regUser.getPassword()));
         RegUser result = regUserRepository.save(regUser);
         return ResponseEntity.ok(result);

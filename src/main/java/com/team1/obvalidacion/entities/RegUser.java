@@ -15,9 +15,6 @@ public class RegUser {
     private Long id;
 
     @Column
-    private String username;
-
-    @Column
     //@JsonIgnore
     private String password;
 
@@ -33,9 +30,8 @@ public class RegUser {
     public RegUser() {
     }
 
-    public RegUser(Long id, String username, String password, String email, String name, String surname) {
+    public RegUser(Long id, String password, String email, String name, String surname) {
         this.id = id;
-        this.username = username;
         this.password = password;
         this.email = email;
         this.name = name;
@@ -48,14 +44,6 @@ public class RegUser {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getPassword() {
@@ -94,7 +82,6 @@ public class RegUser {
     public String toString() {
         return "RegUser{" +
                 "id=" + id +
-                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", name='" + name + '\'' +
