@@ -1,5 +1,6 @@
 package com.team1.obvalidacion.services;
 
+import com.team1.obvalidacion.entities.Role;
 import com.team1.obvalidacion.entities.User;
 import com.team1.obvalidacion.repositories.UserRepository;
 import com.team1.obvalidacion.security.jwt.JwtTokenUtil;
@@ -39,6 +40,8 @@ public class UserServiceImpl implements UserService {
         this.jwtTokenUtil = jwtTokenUtil;
     }
 
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
@@ -73,6 +76,8 @@ public class UserServiceImpl implements UserService {
 
         // Create new user's account
         User user = new User(encoder.encode(signUpRequest.getPassword()), signUpRequest.getEmail(), signUpRequest.getName(), signUpRequest.getSurname());
+        Role role = roleService.findByName("USER");
+        user.setRole(role);
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }

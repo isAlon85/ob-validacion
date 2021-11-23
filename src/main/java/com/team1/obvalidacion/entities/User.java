@@ -1,6 +1,7 @@
 package com.team1.obvalidacion.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -29,6 +30,10 @@ public class User {
 
     @Column
     private String surname;
+
+    @ManyToOne
+    @JsonBackReference
+    private Role role;
 
     public User() {
     }
@@ -89,14 +94,12 @@ public class User {
         this.surname = surname;
     }
 
-    @Override
-    public String toString() {
-        return "RegUser{" +
-                "id=" + id +
-                ", password='" + password + '\'' +
-                ", email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", surname1='" + surname + '\'' +
-                '}';
+    public Role getRole() {
+        return role;
     }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
 }
