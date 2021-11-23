@@ -1,1 +1,1 @@
-insert into app_users(username, password, email, name, surname) values ('admin@validation.com', '$2a$10$qINz45KQzkLHtzOovvgjn.y1SKh8zfR5Meyh61FHz3bvSlO4uez.O', 'admin@validation.com', null, null);
+INSERT INTO  ob_user(username, password, email, name, surname) VALUES ('admin@validation.com', '$2a$10$qeqRA.F2mM0Z.aAohio0AezEAfbqyNAbRL0G//dmTfm8zshDBXN26', 'admin@validation.com', null, null);
