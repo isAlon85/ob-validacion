@@ -1,8 +1,8 @@
-package com.example.demo.security.config;
+package com.team1.obvalidacion.security.config;
 
-import com.example.demo.security.jwt.JwtAuthEntryPoint;
-import com.example.demo.security.jwt.JwtRequestFilter;
-import com.example.demo.security.service.UserDetailsServiceImpl;
+import com.team1.obvalidacion.security.jwt.JwtAuthEntryPoint;
+import com.team1.obvalidacion.security.jwt.JwtRequestFilter;
+import com.team1.obvalidacion.security.service.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -81,9 +81,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests().antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
-                .antMatchers("/api/hello/**").permitAll()
+                .authorizeRequests().antMatchers("/api/users/**").permitAll()
+                .antMatchers(/*"/v2/api-docs", "/configuration/**", */"/swagger*/**"/*, "/webjars/**"*/).permitAll()
+                //.antMatchers("/api/hello/**").permitAll()
                 .antMatchers("/").permitAll()
                 .anyRequest().authenticated();
 

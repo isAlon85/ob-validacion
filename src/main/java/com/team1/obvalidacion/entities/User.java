@@ -7,12 +7,15 @@ import javax.persistence.*;
 
 @Entity
 @Table(name="ob_user")
-public class RegUser {
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
+
+    @Column
+    private String username;
 
     @Column
     //@JsonIgnore
@@ -27,12 +30,12 @@ public class RegUser {
     @Column
     private String surname;
 
-    public RegUser() {
+    public User() {
     }
 
-    public RegUser(Long id, String password, String email, String name, String surname) {
-        this.id = id;
+    public User(String password, String email, String name, String surname) {
         this.password = password;
+        this.username = email;
         this.email = email;
         this.name = name;
         this.surname = surname;
@@ -44,6 +47,14 @@ public class RegUser {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

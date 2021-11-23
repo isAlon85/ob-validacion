@@ -1,0 +1,1 @@
+insert into app_users(username, password, email, name, surname) values ('admin@validation.com', '$2a$10$qINz45KQzkLHtzOovvgjn.y1SKh8zfR5Meyh61FHz3bvSlO4uez.O', 'admin@validation.com', null, null);

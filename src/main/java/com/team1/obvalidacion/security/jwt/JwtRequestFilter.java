@@ -1,6 +1,6 @@
-package com.example.demo.security.jwt;
+package com.team1.obvalidacion.security.jwt;
 
-import com.example.demo.security.service.UserDetailsServiceImpl;
+import com.team1.obvalidacion.security.service.UserDetailsServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

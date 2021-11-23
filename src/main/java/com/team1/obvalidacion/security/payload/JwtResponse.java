@@ -1,4 +1,4 @@
-package com.example.demo.security.payload;
+package com.team1.obvalidacion.security.payload;
 
 public class JwtResponse {
 
