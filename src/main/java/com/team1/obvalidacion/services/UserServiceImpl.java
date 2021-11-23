@@ -64,13 +64,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResponseEntity<MessageResponse> register(@RequestBody RegisterRequest signUpRequest) {
 
-        // Check 1: username
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(new MessageResponse("Error: Username is already taken!"));
-        }
-
         // Check 2: email
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
@@ -80,9 +73,7 @@ public class UserServiceImpl implements UserService {
 
         // Create new user's account
         User user = new User(encoder.encode(signUpRequest.getPassword()), signUpRequest.getEmail(), signUpRequest.getName(), signUpRequest.getSurname());
-
         userRepository.save(user);
-
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
@@ -91,12 +82,9 @@ public class UserServiceImpl implements UserService {
 
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtTokenUtil.generateJwtToken(authentication);
-
         // UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-
         return ResponseEntity.ok(new JwtResponse(jwt));
     }
 
