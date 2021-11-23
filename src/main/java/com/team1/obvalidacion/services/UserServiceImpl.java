@@ -3,11 +3,16 @@ package com.team1.obvalidacion.services;
 import com.team1.obvalidacion.entities.User;
 import com.team1.obvalidacion.repositories.UserRepository;
 import com.team1.obvalidacion.security.jwt.JwtTokenUtil;
+import com.team1.obvalidacion.security.payload.JwtResponse;
+import com.team1.obvalidacion.security.payload.LoginRequest;
 import com.team1.obvalidacion.security.payload.MessageResponse;
 import com.team1.obvalidacion.security.payload.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -80,6 +85,21 @@ public class UserServiceImpl implements UserService {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
+    @Override
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest loginRequest){
+
+        Authentication authentication = authManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtTokenUtil.generateJwtToken(authentication);
+
+        // UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        return ResponseEntity.ok(new JwtResponse(jwt));
+    }
+
 
     @Override
     public ResponseEntity<User> update(User user){

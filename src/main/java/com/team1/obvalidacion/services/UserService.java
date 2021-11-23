@@ -1,6 +1,8 @@
 package com.team1.obvalidacion.services;
 
 import com.team1.obvalidacion.entities.User;
+import com.team1.obvalidacion.security.payload.JwtResponse;
+import com.team1.obvalidacion.security.payload.LoginRequest;
 import com.team1.obvalidacion.security.payload.MessageResponse;
 import com.team1.obvalidacion.security.payload.RegisterRequest;
 import org.apache.logging.log4j.message.Message;
@@ -15,6 +17,8 @@ public interface UserService {
     ResponseEntity<User> findOneById(Long id);
 
     ResponseEntity<MessageResponse> register(RegisterRequest request);
+
+    ResponseEntity<JwtResponse> login(LoginRequest request);
 
     ResponseEntity<User> update(User user);
 

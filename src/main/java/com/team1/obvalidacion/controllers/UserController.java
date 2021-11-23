@@ -1,6 +1,8 @@
 package com.team1.obvalidacion.controllers;
 
 import com.team1.obvalidacion.entities.User;
+import com.team1.obvalidacion.security.payload.JwtResponse;
+import com.team1.obvalidacion.security.payload.LoginRequest;
 import com.team1.obvalidacion.security.payload.MessageResponse;
 import com.team1.obvalidacion.security.payload.RegisterRequest;
 import com.team1.obvalidacion.services.UserServiceImpl;
@@ -19,7 +21,7 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    private final String ROOT = "/api/users";
+    private final String ROOT = "/api";
     private final Logger log = LoggerFactory.getLogger(UserController.class);
     private final UserServiceImpl userService;
 
@@ -27,20 +29,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(ROOT)
+    @GetMapping(ROOT + "/users")
     @ApiOperation("Find all Users in DB")
     public ResponseEntity<List<User>> findAll() {
         return userService.findAll();
     }
 
-    @GetMapping(ROOT + "/" + "{id}")
+    @GetMapping(ROOT + "/users/" + "{id}")
     @ApiOperation("Find a User in DB by ID")
     public ResponseEntity<User> findOneById(@PathVariable Long id) {
         return userService.findOneById(id);
     }
 
-    @PostMapping(ROOT + "/register")
-    @ApiOperation("Create a User in DB with a JSON")
+    @PostMapping(ROOT + "/auth/register")
+    @ApiOperation("Register a User in DB with a JSON")
     public ResponseEntity<MessageResponse> register(@RequestBody RegisterRequest signUpRequest) {
         ResponseEntity<MessageResponse> result = userService.register(signUpRequest);
 
@@ -50,7 +52,18 @@ public class UserController {
         return result;
     }
 
-    @PutMapping(ROOT)
+    @PostMapping(ROOT + "/auth/login")
+    @ApiOperation("Login with a JSON")
+    public ResponseEntity<JwtResponse> login(@RequestBody LoginRequest loginRequest) {
+        ResponseEntity<JwtResponse> result = userService.login(loginRequest);
+
+        if (result.getStatusCode().equals(HttpStatus.BAD_REQUEST))
+            log.warn("Trying to create a User with ID or email/username is already used");
+
+        return result;
+    }
+
+    @PutMapping(ROOT + "/users/" + "{id}")
     @ApiOperation("Update a User in DB with a JSON")
     public ResponseEntity<User> updateBook(@RequestBody User user) {
         ResponseEntity<User> result = userService.update(user);
@@ -64,7 +77,7 @@ public class UserController {
         return result;
     }
 
-    @DeleteMapping(ROOT + "/" + "{id}")
+    @DeleteMapping(ROOT + "/users/" + "{id}")
     @ApiOperation("Delete a User in DB by ID")
     public ResponseEntity delete(@PathVariable Long id) {
         ResponseEntity result = userService.delete(id);
@@ -75,7 +88,7 @@ public class UserController {
         return result;
     }
 
-    @DeleteMapping(ROOT + "/" + "restartDB")
+    @DeleteMapping(ROOT + "/users/" + "restartDB")
     public ResponseEntity deleteAll(@RequestHeader HttpHeaders headers) {
         ResponseEntity result = userService.deleteAll();
 
