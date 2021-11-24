@@ -9,6 +9,7 @@ import com.team1.obvalidacion.security.payload.LoginRequest;
 import com.team1.obvalidacion.security.payload.MessageResponse;
 import com.team1.obvalidacion.security.payload.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -70,7 +71,7 @@ public class UserServiceImpl implements UserService {
         // Check 2: email
         if (userRepository.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
-                    .badRequest()
+                    .status(HttpStatus.CONFLICT)
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
 
