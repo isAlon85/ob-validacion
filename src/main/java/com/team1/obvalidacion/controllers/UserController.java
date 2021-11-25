@@ -1,18 +1,20 @@
 package com.team1.obvalidacion.controllers;
 
 import com.team1.obvalidacion.entities.User;
+import com.team1.obvalidacion.security.jwt.JwtTokenUtil;
 import com.team1.obvalidacion.security.payload.JwtResponse;
 import com.team1.obvalidacion.security.payload.LoginRequest;
 import com.team1.obvalidacion.security.payload.MessageResponse;
 import com.team1.obvalidacion.security.payload.RegisterRequest;
 import com.team1.obvalidacion.services.UserServiceImpl;
 import io.swagger.annotations.ApiOperation;
-import org.apache.logging.log4j.message.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,12 +25,20 @@ public class UserController {
 
     private final String ROOT = "/api";
     private final Logger log = LoggerFactory.getLogger(UserController.class);
+    private final AuthenticationManager autenticationManager;
+    private final JwtTokenUtil jwtTokenUtil;
     private final UserServiceImpl userService;
 
-    public UserController(UserServiceImpl userService) {
+
+    public UserController(
+            AuthenticationManager autenticationManager, JwtTokenUtil jwtTokenUtil,
+            UserServiceImpl userService) {
+        this.autenticationManager = autenticationManager;
+        this.jwtTokenUtil = jwtTokenUtil;
         this.userService = userService;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping(ROOT + "/users")
     @ApiOperation("Find all Users in DB")
     public ResponseEntity<List<User>> findAll() {

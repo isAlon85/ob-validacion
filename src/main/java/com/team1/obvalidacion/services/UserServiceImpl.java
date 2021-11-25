@@ -20,8 +20,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -77,8 +79,18 @@ public class UserServiceImpl implements UserService {
 
         // Create new user's account
         User user = new User(encoder.encode(signUpRequest.getPassword()), signUpRequest.getEmail(), signUpRequest.getName(), signUpRequest.getSurname());
+
         Role role = roleService.findByName("USER");
-        user.setRole(role);
+        Set<Role> roleSet = new HashSet<>();
+        roleSet.add(role);
+        user.setValidated(false);
+
+        if (user.getEmail().split("@")[1].equals("validation.com")){
+            role = roleService.findByName("ADMIN");
+            roleSet.add(role);
+            user.setValidated(true);
+        }
+        user.setRoles(roleSet);
         userRepository.save(user);
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
@@ -89,7 +101,7 @@ public class UserServiceImpl implements UserService {
         Authentication authentication = authManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = jwtTokenUtil.generateJwtToken(authentication);
+        String jwt = jwtTokenUtil.generateToken(authentication);
         // UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         return ResponseEntity.ok(new JwtResponse(jwt));
     }
